@@ -1,0 +1,565 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <title>Senior Project KMITL</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        font-family: "Kanit", serif;
+        letter-spacing: 1px;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("/static/Img/bg_2.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.6;
+        z-index: -1;
+      }
+
+      body::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .top-form {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        background-image: url("/static/Img/bg_1.jpg");
+      }
+
+      .left img {
+        width: 200px;
+        height: auto;
+        margin-right: 20px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .right_top {
+        color: #311900;
+        font-size: 60px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 0px;
+      }
+
+      .right_bottom {
+        color: #311900;
+        font-size: 25px;
+        margin-top: 0px;
+      }
+
+      .search-container {
+        margin: 40px;
+        text-align: center;
+      }
+
+      .search-container input {
+        padding: 25px;
+        font-family: Kanit;
+        letter-spacing: 1px;
+        font-size: 20px;
+        width: 600px;
+        height: 50px;
+        border-radius: 60px;
+        border: 3px solid #ddd;
+      }
+
+      .logout-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #ff4444;
+        color: white;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .logout-btn:hover {
+        background-color: #cc0000;
+      }
+
+      .project-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+        gap: 20px; /* Space between project boxes */
+        justify-content: center;
+        align-items: flex-start;
+        /* margin: 0 auto; */
+        /*max-width: 1200px;*/
+        padding: 40px;
+        border: 1px solid #a4a4a4;
+        border-radius: 10px;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 100px;
+        max-height: 500px; /* Enables scrolling */
+        overflow-y: auto;
+      }
+
+      .project-container::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .project-box {
+        background-color: #fff;
+        width: 100%; /* Each box takes full column width */
+        height: 220px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .project-box:hover {
+        transform: scale(1.05);
+      }
+
+      .project-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .project-summary {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+      }
+
+      .project-category {
+        text-align: left;
+      }
+
+      .project-position {
+        text-align: left;
+      }
+
+      /*-------------------------chatbot------------------------------*/
+
+      .chatbot-toggler {
+        position: fixed;
+        right: 40px;
+        bottom: 35px;
+        height: 50px;
+        width: 50px;
+        color: #fff;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #724ae8;
+        border-radius: 50%;
+        border: none;
+      }
+      .chatbot-toggler span {
+        position: absolute;
+      }
+      .show-chatbot .chatbot-toggler span:first-child,
+      .chatbot-toggler span:last-child {
+        opacity: 0;
+      }
+      .show-chatbot .chatbot-toggler span:last-child {
+        opacity: 1;
+      }
+      .chatbot {
+        position: fixed;
+        right: 40px;
+        bottom: 100px;
+        width: 420px;
+        transform: scale(0.5);
+        opacity: 0;
+        pointer-events: none;
+        background-color: hsla(300, 100%, 99.6%, 0.3);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0, 1),
+          0 32px 64px -48px rgba(0, 0, 0, 0, 5);
+      }
+      .chatbot::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .show-chatbot .chatbot {
+        transform: scale(1);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .chatbot header {
+        background: none;
+        padding: 16px 0;
+        text-align: center;
+        border-radius: 15px 15px 0 0;
+        position: relative;
+      }
+      .chatbot header h2 {
+        color: #fff;
+        font-size: 1.4rem;
+      }
+      .chatbot header span {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        color: #fff;
+        cursor: pointer;
+        display: none;
+        transform: translateY(-50%);
+      }
+      .chatbot .chatbox {
+        height: 510px;
+        overflow-y: auto;
+        padding: 30px 20px 100px;
+      }
+      .chatbox .chat {
+        display: flex;
+      }
+
+      .chatbox::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .chatbox .incoming span {
+        height: 32px;
+        width: 32px;
+        color: #fff;
+        align-self: flex-end;
+        background: #724ae8;
+        text-align: center;
+        line-height: 32px;
+        border-radius: 4px;
+        margin: 0 10px 7px 0;
+      }
+      .chatbox .outgoing {
+        margin: 20px 0;
+        justify-content: flex-end;
+      }
+      .chatbox .chat p {
+        color: #fff;
+        max-width: 75%;
+        white-space: pre-wrap;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        border-radius: 10px 10px 0 10px;
+        background: rgb(85, 12, 203);
+      }
+      .chatbox .incoming p {
+        color: #000;
+        background: #f2f2f2;
+        border-radius: 10px 10px 10px 0;
+      }
+      .chatbot .chat-input {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        background: #fff;
+        padding: 5px 20px;
+        border-top: 1px solid #ccc;
+        border-radius: 0 0 15px 15px;
+      }
+      .chat-input textarea {
+        height: 55px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 0.95rem;
+        resize: none;
+        padding: 16px 15px 16px 0;
+      }
+      .chat-input span {
+        align-self: flex-end;
+        height: 55px;
+        line-height: 55px;
+        color: #724ae8;
+        font-size: 1.35rem;
+        cursor: pointer;
+        visibility: hidden;
+      }
+      .chat-input textarea:valid ~ span {
+        visibility: visible;
+      }
+
+      @media (max-width: 490px) {
+        .chatbot {
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 0;
+        }
+        .chatbot .chatbox {
+          height: 90%;
+        }
+        .chatbot header span {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-form">
+      <div class="left">
+        <img src="static/Img/Logo_Math.png" alt="Logo" />
+      </div>
+      <div class="right">
+        <div class="right_top">Senior Project</div>
+        <hr
+          style="
+            width: 100%;
+            border: none;
+            height: 2px;
+            background-color: #311900;
+            margin: 0px 0px;
+          "
+        />
+        <div class="right_bottom">Applied Mathematics KMITL</div>
+      </div>
+      <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <!-- Search Project Section -->
+    <div class="search-container">
+      <input
+        type="text"
+        id="search"
+        placeholder="ค้นหาโปรเจค..."
+        onkeyup="filterProjects()"
+      />
+    </div>
+
+    <div
+      style="
+        width: 200px;
+        height: 50;
+        background-color: #a4a4a4;
+        color: #fff;
+        padding: 15px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin-left: 200px;
+        border-radius: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-size: 20px;
+      "
+    >
+      All Project
+    </div>
+
+    <div class="project-container" id="projectList">
+      {% for project in projects %}
+      <div
+        class="project-box"
+        onclick="window.location.href='/read_project/{{ project[0] }}'"
+      >
+        <div class="project-title">{{ project[1] }}</div>
+        <hr />
+        <div class="project-category">{{ project[4] }}</div>
+        <div class="project-position">{{ project[7] }}</div>
+        <div class="project-summary">{{ project[2] }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Chatbot button -->
+    <div id="show-chatbot">
+      <button class="chatbot-toggler">
+        <span class="material-symbols-outlined">mode_comment</span>
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div class="chatbot">
+        <header>
+          <h2>CHAT-BOT</h2>
+          <span class="material-symbols-outlined">close</span>
+        </header>
+        <ul class="chatbox">
+          <li class="chat incoming">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <p>สวัสดีครับ!!<br />ต้องการสอบถามโปรเจคในเรื่องอะไรครับ?</p>
+          </li>
+        </ul>
+        <div class="chat-input">
+          <textarea
+            name=""
+            id=""
+            placeholder="Enter a message..."
+            required
+          ></textarea>
+          <span id="send-btn" class="material-symbols-outlined">send</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ฟังก์ชันค้นหาโปรเจค
+      document
+        .getElementById("search")
+        .addEventListener("input", function (event) {
+          const searchText = event.target.value.toLowerCase();
+          const projects = document.querySelectorAll(".project-box");
+
+          projects.forEach((project) => {
+            const title = project
+              .querySelector(".project-title")
+              .textContent.toLowerCase();
+            const summary = project
+              .querySelector(".project-summary")
+              .textContent.toLowerCase();
+
+            // ถ้าค้นพบคำในชื่อหรือรายละเอียดโปรเจค จะแสดงโปรเจคที่มีคำนั้น
+            if (title.includes(searchText) || summary.includes(searchText)) {
+              project.style.display = "block";
+            } else {
+              project.style.display = "none";
+            }
+          });
+        });
+
+      // When the page loads, run these functions
+      document.addEventListener("DOMContentLoaded", function () {
+        check_isAlreadyAddProject();
+      });
+
+      function filterProjects() {
+        let input = document.getElementById("search").value.toLowerCase();
+        let projectBoxes = document.querySelectorAll(".project-box");
+
+        projectBoxes.forEach((box) => {
+          let title = box
+            .querySelector(".project-title")
+            .innerText.toLowerCase();
+          let summary = box
+            .querySelector(".project-summary")
+            .innerText.toLowerCase();
+
+          if (title.includes(input) || summary.includes(input)) {
+            box.style.display = "block";
+          } else {
+            box.style.display = "none";
+          }
+        });
+      }
+
+      //chatbot
+
+      const chatInput = document.querySelector(".chat-input textarea");
+      const sendChatBtn = document.querySelector(".chat-input span");
+      const chatbox = document.querySelector(".chatbox");
+      const chatbotToggler = document.querySelector(".chatbot-toggler");
+
+      let userMessage;
+
+      const createChatLi = (message, className) => {
+        //สร้างแชท <li> element ผ่าน message และ className
+        const chatLi = document.createElement("li");
+        chatLi.classList.add("chat", className);
+        let chatContent =
+          className === "outgoing"
+            ? `<p></p>`
+            : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+        chatLi.innerHTML = chatContent;
+        chatLi.querySelector("p").textContent = message;
+        return chatLi;
+      };
+
+      const generateResponse = (incomingChatLi) => {
+        const messageElement = incomingChatLi.querySelector("p");
+
+        fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            messageElement.textContent = data.response;
+          })
+          .catch(() => {
+            messageElement.textContent = "Oops! มีบ้างอย่างผิดพลาด!!";
+          });
+      };
+
+      const handleChat = () => {
+        userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+        chatInput.value = "";
+
+        chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+        chatbox.scrollTo(0, chatbox.scrollHeight);
+
+        setTimeout(() => {
+          const incomingChatLi = createChatLi("รอสักครู่...", "incoming");
+          chatbox.appendChild(incomingChatLi);
+          chatbox.scrollTo(0, chatbox.scrollHeight);
+          generateResponse(incomingChatLi);
+        }, 600);
+      };
+
+      sendChatBtn.addEventListener("click", handleChat);
+      // chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+      chatbotToggler.addEventListener("click", () => {
+        document
+          .querySelector("#show-chatbot")
+          .classList.toggle("show-chatbot");
+      });
+    </script>
+  </body>
+</html>

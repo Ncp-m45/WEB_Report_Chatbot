@@ -1,0 +1,10 @@
+# fastapi
+# uvicorn
+# sqlalchemy
+# psycopg2-binary
+# pydantic
+
+flask
+psycopg2
+os
+uuid

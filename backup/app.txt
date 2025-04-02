@@ -1,0 +1,189 @@
+import psycopg2
+import os
+from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'
+
+''' Database connection details Class '''
+class Database:
+    DB_CONFIG = {
+        "hostname" : 'localhost',
+        "database" : 'DB',
+        "username" : 'postgres',
+        "password" : '1234',
+        "port" : 5432
+    }
+
+    @classmethod
+    def connect_db(cls):
+        # Connect to the PostgreSQL database
+        conn = psycopg2.connect(**cls.DB_CONFIG)
+        return conn
+    
+    @classmethod
+    def execute_query(cls, query, params=None, fetch=False):
+        conn = cls.connect_db()
+        cur = conn.cursor()
+        try:
+            cur.execute(query, params)
+            if fetch:
+                return cur.fetchall()
+            conn.commit()
+        finally:
+            cur.close()
+            conn.close()
+    
+''' Class User
+              cls = accessing the User class by itself  '''
+class User:
+    def __init__(self, user_id, email, role):
+        self.user_id = user_id
+        self.email = email
+        self.role = role
+        self.au_id = email.split('@')[0]
+
+    # Check if the user with the given email and password exists in the database 
+    @classmethod
+    def authenticate(cls, email, password):
+        conn = cls.connect_db()
+        cur = conn.cursor()
+
+        cur.execute('SELECT email, role FROM "user" WHERE email = %s AND password = %s', (email, password))
+        user = cur.fetchone()
+
+        cur.close()
+        conn.close()
+        return user 
+    
+    # Query detail user
+    @classmethod
+    def get_user(cls, email):
+        conn = cls.connect()
+        cur = conn.cursor()
+
+        cur.execute('SELECT email, role FROM "user" WHERE email = %s', (email,))
+        user_detail = cur.fetchone()
+
+        cur.close()
+        conn.close()
+        return user_detail
+
+''' Class Report '''
+class Report:
+    def __init__(self, title, intro, year, category, path, org=None, type_org=None, position=None):
+        self.title = title
+        self.intro = intro
+        self.year = year
+        self.category = category
+        self.path = path
+        self.org = org
+        self.type_org = type_org
+        self.position = position
+    
+    def save(self, advisor_email, report_types, creator_names):
+        
+        if not Advisor.exists(advisor_email):
+            raise ValueError("Advisor does not exist")
+
+        # Insert report
+        query = '''INSERT INTO Report 
+                  (title, intro, year, category, path, org, type_org, advisor_email, creator)
+                  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                  RETURNING report_id'''
+        params = (self.title, self.intro, self.year, self.category, self.path,
+                 self.org, self.type_org, advisor_email, session['user_id'])
+        
+        report_id = Database.execute_query(query, params, fetch=True)[0][0]
+        
+        # Insert authors
+        for name in creator_names:
+            query = '''INSERT INTO Author (au_id, name, report_id)
+                       VALUES (%s, %s, %s)'''
+            Database.execute_query(query, (session['au_id'], name, report_id))
+        
+        # Insert report types
+        for type_id in report_types:
+            query = '''INSERT INTO Re_type (report_id, type_id)
+                       VALUES (%s, %s)'''
+            Database.execute_query(query, (report_id, type_id))
+        
+        return report_id
+
+''' Class Advisor '''    
+class Advisor:
+    @classmethod
+    def exists(cls, email):
+        query = "SELECT 1 FROM Advisor WHERE email = %s"
+        return bool(Database.execute_query(query, (email,), fetch=True))
+
+''' Handle user login '''    
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+    
+    user = User.authenticate(email, password)
+    
+    if user:
+        session['user_id'] = user.user_id
+        session['email'] = user.email
+        session['role'] = user.role
+        session['au_id'] = user.au_id  
+        
+        if user.role == 'student':
+            return redirect(url_for('Homepage_student'))
+        elif user.role == 'teacher':
+            return redirect(url_for('Homepage_teacher'))
+    
+    return redirect(url_for('Login_page'))
+
+''' Add Report '''
+@app.route('/add_report', methods=['POST'])
+def add_report():
+    if session.get('role') != 'student':
+        return redirect(url_for('Login_page'))
+
+    try:
+        # File upload handling
+        pdf_file = request.files['path']
+        if not pdf_file.filename.endswith('.pdf'):
+            raise ValueError("Only PDF file")
+            
+        filename = secure_filename(pdf_file.filename)
+        pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        pdf_file.save(pdf_path)
+
+        # Get creator names
+        num_creators = int(request.form['numCreators'])
+        creator_names = [request.form[f'name_author{i}'] 
+                        for i in range(1, num_creators+1)]
+    
+        # Create report
+        report = Report(
+            title=request.form['title'],
+            intro=request.form['intro'],
+            year=request.form['year'],
+            category=request.form['category'],
+            path=pdf_path,
+            org=request.form.get('org'),
+            type_org=request.form.get('type_org'),
+            position=request.form.get('position')
+        )
+
+        # Save report
+        report.save(
+            advisor_email=request.form['name_advisor'],
+            report_types=request.form.getlist('report_types'),
+            creator_names=creator_names
+        )
+    
+        return redirect(url_for('Homepage_student'))
+
+    except Exception as e:
+        return str(e), 400
+
+if __name__ == '__main__':
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    app.run(debug=True)

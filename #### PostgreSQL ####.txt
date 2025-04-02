@@ -1,0 +1,23 @@
+#### PostgreSQL ####
+Doc:
+https://www.datacamp.com/tutorial/tutorial-postgresql-python
+
+YT:
+https://www.youtube.com/watch?v=iGjpsKUaVsE
+
+#### FastAPI #####
+Doc:
+https://medium.com/@kevinkoech265/a-guide-to-connecting-postgresql-and-pythons-fast-api-from-installation-to-integration-825f875f9f7d
+
+https://fastapi.tiangolo.com/#create-it
+
+YT:
+https://www.youtube.com/watch?v=398DuQbQJq0
+
+#### env ####
+YT:
+https://youtu.be/qzGsRSwdZE4?si=pc1bWa5AGGjVbj-r
+
+#### key ลัด ####
+IntelliSense - (`Ctrl + Space`)
+การจัดรูปแบบโค้ด - (`Shift + Alt + F`)

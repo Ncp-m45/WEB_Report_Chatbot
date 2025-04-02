@@ -1,0 +1,580 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Senior Project KMITL</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Kanit";
+        letter-spacing: 1px;
+        display: flex;
+      }
+
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        height: 100vh;
+        background-image: url("static/Img/bg_1.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .right {
+        width: 60%;
+        height: 100vh;
+        background-color: black;
+        color: white;
+        padding: 50px;
+        overflow-y: auto;
+      }
+
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+
+      input[type="text"],
+      input[type="file"],
+      input[type="number"],
+      textarea {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        font-family: "Kanit";
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+
+      input[type="file"] {
+        padding-left: 70px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 60px;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        font-family: "Kanit";
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+
+      textarea {
+        font-family: "Kanit";
+        font-size: 18px;
+        letter-spacing: 1px;
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      .name-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .extra-fields input {
+        width: 100%;
+        height: 50px;
+        font-size: 18px;
+      }
+
+      .upload-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%;
+      }
+
+      .upload-container svg {
+        position: absolute;
+        left: 15px;
+      }
+
+      .upload-container input[type="file"] {
+        width: 100%;
+        padding-left: 50px;
+        height: 50px;
+      }
+
+      button {
+        width: 150px;
+        height: 50px;
+        padding: 10px;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 60px;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        font-size: 20px;
+        font-family: "Kanit";
+      }
+
+      button:hover {
+        background-color: #ff9900;
+        color: white;
+      }
+
+      .logout-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #ff4444;
+        color: white;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .logout-btn:hover {
+        background-color: #cc0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left">
+      <a href="/logout" class="logout-btn">Logout</a>
+      <img
+        style="width: 150px; height: auto; margin-bottom: 10px"
+        src="static/Img/Logo_Math.png"
+      />
+      <h1
+        style="
+          color: #311900;
+          font-family: Kanit;
+          font-weight: 500;
+          font-size: 30px;
+          margin: 0px;
+        "
+      >
+        Senior Project
+      </h1>
+      <hr
+        style="
+          width: 280px;
+          border: none;
+          height: 2px;
+          background-color: #311900;
+          margin: 0px 0px;
+        "
+      />
+      <h2
+        style="
+          color: #311900;
+          font-family: Kanit;
+          font-weight: 500;
+          font-size: 20px;
+          margin: 0px;
+        "
+      >
+        Applied Mathematics KMITL
+      </h2>
+      <div
+        style="
+          width: 300px;
+          height: 80px;
+          padding: 10px;
+          background: #311900;
+          border-radius: 60px;
+          color: #ffffff;
+          font-family: Kanit;
+          font-size: 30px;
+          font-weight: 500;
+          letter-spacing: 1px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 40px;
+        "
+      >
+        Add Project
+      </div>
+    </div>
+
+    <div class="right">
+      <h2>กรอกข้อมูลโปรเจคของคุณ</h2>
+      <form
+        id="reportForm"
+        class="form-container"
+        action="/add_report"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="text"
+          name="title"
+          placeholder="ชื่อหัวข้อโปรเจค"
+          required
+          style="width: 100%; height: 50px"
+        />
+
+        <div class="upload-container">
+          <svg
+            width="28"
+            height="29"
+            viewBox="0 0 28 29"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.9566 22.4142L23.3333 13.2549L20.4458 10.4344C21.2116 9.68633 21.6419 8.67175 21.6419 7.61385C21.6419 6.55594 21.2116 5.54136 20.4458 4.79331C19.68 4.04525 18.6413 3.625 17.5583 3.625C16.4753 3.625 15.4366 4.04525 14.6708 4.79331L5.29407 13.9526C4.14535 15.0747 3.5 16.5965 3.5 18.1834C3.5 19.7703 4.14535 21.2921 5.29407 22.4142C6.44279 23.5363 8.00079 24.1667 9.62533 24.1667C11.2499 24.1667 12.8079 23.5363 13.9566 22.4142Z"
+              fill="black"
+              fill-opacity="0.15"
+            />
+            <path
+              d="M23.3333 13.2549L13.9566 22.4142C12.8079 23.5363 11.2499 24.1667 9.62533 24.1667C8.00079 24.1667 6.44279 23.5363 5.29407 22.4142C4.14535 21.2921 3.5 19.7703 3.5 18.1834C3.5 16.5965 4.14535 15.0747 5.29407 13.9526L14.6708 4.79331C15.4366 4.04525 16.4753 3.625 17.5583 3.625C18.6413 3.625 19.68 4.04525 20.4458 4.79331C21.2116 5.54136 21.6419 6.55594 21.6419 7.61385C21.6419 8.67175 21.2116 9.68633 20.4458 10.4344L11.0589 19.5937C10.676 19.9677 10.1566 20.1778 9.61512 20.1778C9.07361 20.1778 8.55428 19.9677 8.17137 19.5937C7.78846 19.2196 7.57335 18.7124 7.57335 18.1834C7.57335 17.6544 7.78846 17.1472 8.17137 16.7731L16.8339 8.32147"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <input type="file" name="path" accept=".pdf" required />
+        </div>
+
+        <label for="category" style="font-size: 20px">ประเภทโปรเจค:</label>
+        <select
+          id="category"
+          name="category"
+          onchange="show_about_org_Field()"
+          style="
+            width: 80%;
+            height: 50px;
+            border-radius: 5px;
+            font-family: Kanit;
+            font-size: 18px;
+            letter-spacing: 1px;
+          "
+        >
+          <option value="">-- เลือกประเภทโปรเจค --</option>
+          <option value="co-op">สหกิจ</option>
+          <option value="special-project">โครงงานพิเศษ</option>
+        </select>
+
+        <div id="co-opFields" class="extra-fields" style="display: none">
+          <label for="position">ตำแหน่ง:</label>
+          <input
+            type="text"
+            id="position"
+            name="position"
+            placeholder="กรอกตำแหน่ง"
+          />
+
+          <label for="org">ชื่อบริษัท:</label>
+          <input type="text" id="org" name="org" placeholder="กรอกชื่อบริษัท" />
+
+          <label for="type_org">ประเภทบริษัท:</label>
+          <input
+            type="text"
+            id="type_org"
+            name="type_org"
+            placeholder="ex. Tech,Retail,Industry,Insurance,Hotel,..."
+          />
+        </div>
+
+        <div
+          id="specialProjectFields"
+          class="extra-fields"
+          style="display: none"
+        ></div>
+
+        <label for="type_re" style="font-size: 20px"
+          >โปรเจคของคุณทำเกี่ยวกับเรื่องอะไร:</label
+        >
+        <div id="type_re" style="width: 80%; display: flex; flex-wrap: wrap">
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="IT"
+              name="report_types"
+              value="IT"
+              onchange="OtherInput()"
+            />
+            <label for="IT">IT</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Data"
+              name="report_types"
+              value="Data"
+              onchange="OtherInput()"
+            />
+            <label for="Data">Data</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="AI"
+              name="report_types"
+              value="AI"
+              onchange="OtherInput()"
+            />
+            <label for="AI">AI</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Insurance"
+              name="report_types"
+              value="Insurance"
+              onchange="OtherInput()"
+            />
+            <label for="Insurance">Insurance</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Research"
+              name="report_types"
+              value="Research"
+              onchange="OtherInput()"
+            />
+            <label for="Research">Research</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Admin"
+              name="report_types"
+              value="Admin"
+              onchange="OtherInput()"
+            />
+            <label for="Admin">Admin</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Document"
+              name="report_types"
+              value="Document"
+              onchange="OtherInput()"
+            />
+            <label for="Document">Document</label>
+          </div>
+          <div style="width: 45%; margin-bottom: 10px">
+            <input
+              type="checkbox"
+              id="Other"
+              name="report_types"
+              value="Other"
+              onchange="OtherInput()"
+            />
+            <label for="Other">อื่นๆ</label>
+          </div>
+        </div>
+
+        <input
+          type="text"
+          id="other_input"
+          name="other_input"
+          placeholder="กรอกเรื่องที่เกี่ยวข้องกับโปรเจคของคุณ"
+          style="
+            width: 80%;
+            height: 50px;
+            border-radius: 5px;
+            font-family: Kanit;
+            font-size: 18px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            display: none;
+          "
+        />
+
+        <textarea
+          name="intro"
+          placeholder="อธิบายโปรเจคของคุณคร่าวๆ "
+          required
+          style="width: 100%"
+        ></textarea>
+
+        <hr
+          style="
+            width: 100%;
+            border: none;
+            height: 1px;
+            background-color: #ffffff;
+            margin: 20px;
+          "
+        />
+
+        <label for="numCreators" style="font-size: 20px">ผู้จัดทำ:</label>
+        <input
+          type="number"
+          id="numCreators"
+          name="numCreators"
+          min="1"
+          value="1"
+          placeholder="กรอกจำนวนผู้จัดทำ"
+          oninput="generateNameFields()"
+          style="width: 100%; height: 50px"
+        />
+
+        <div id="nameFields" class="name-inputs" style="width: 100%"></div>
+
+        <input
+          type="text"
+          name="name_advisor"
+          placeholder="อาจารย์ที่ปรึกษา"
+          required
+          style="width: 100%; height: 50px"
+        />
+        <input
+          type="number"
+          name="year"
+          min="2560"
+          placeholder="ปีที่ทำโปรเจคนี้ (พ.ศ.)"
+          style="width: 100%; height: 50px"
+        />
+
+        <button type="submit">ส่งข้อมูล</button>
+
+        <script>
+          document
+            .getElementById("reportForm")
+            .addEventListener("submit", function (event) {
+              event.preventDefault(); // Prevent default form submission
+
+              const formData = new FormData(this);
+
+              fetch("/add_report", {
+                method: "POST",
+                body: formData,
+              })
+                // Management response from the server
+                .then((response) => response.json()) // Transform to JSON
+                .then((data) => {
+                  // Manage JSON data received from the server
+                  if (data.status === "error") {
+                    alert(data.message);
+                  } else {
+                    alert("Insert Successful");
+                    window.location.href = "/hpStudent";
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                  document.getElementById(
+                    "alertMessage"
+                  ).innerHTML = `<div class="alert alert-danger">An error occurred. Please try again.</div>`;
+                });
+            });
+
+          // Management other report types
+          function OtherInput() {
+            var otherInput = document.getElementById("other_input");
+            var otherSelected = document.getElementById("Other").checked;
+
+            // If the "Other" checkbox is selected, show the text input
+            if (otherSelected) {
+              otherInput.style.display = "block";
+              otherInput.setAttribute("required", "true");
+            } else {
+              otherInput.style.display = "none";
+              otherInput.removeAttribute("required");
+            }
+          }
+
+          // Management Authors
+          function generateNameFields() {
+            const nameFieldsContainer = document.getElementById("nameFields");
+            nameFieldsContainer.innerHTML = "";
+
+            // Determine the project category
+            const category = document.getElementById("category").value;
+            let numCreators;
+
+            if (category === "co-op") {
+              // For Co-op, force one creator and update the label text.
+              numCreators = 1;
+            } else {
+              // For other types, get the value from the number input.
+              numCreators = document.getElementById("numCreators").value || 1;
+            }
+
+            for (let i = 1; i <= numCreators; i++) {
+              const label = document.createElement("label");
+              // For co-op, change the first field's label
+              if (category === "co-op" && i === 1) {
+                label.textContent = "รหัสนักศึกษาของผู้จัดทำ:"; // without "คนที่ 1"
+              } else {
+                label.textContent = "รหัสนักศึกษาของผู้จัดทำคนที่ " + i + ":";
+              }
+
+              const input = document.createElement("input");
+              input.type = "text";
+              input.name = "name_author" + i;
+              if (category === "co-op" && i === 1) {
+                input.placeholder = "กรอกรหัสนักศึกษาของผู้จัดทำ";
+              } else {
+                input.placeholder = "กรอกหัสนักศึกษาของผู้จัดทำคนที่ " + i;
+              }
+
+              // Set the fixed default value for the first field (if needed)
+              if (i === 1) {
+                input.value = "{{studentId}}"; // This could be replaced with a server-side templated value.
+              }
+
+              nameFieldsContainer.appendChild(label);
+              nameFieldsContainer.appendChild(input);
+            }
+          }
+
+          function show_about_org_Field() {
+            // Hide both extra organization fields initially.
+            document.getElementById("co-opFields").style.display = "none";
+            document.getElementById("specialProjectFields").style.display =
+              "none";
+
+            const category = document.getElementById("category").value;
+
+            if (category === "co-op") {
+              document.getElementById("co-opFields").style.display = "block";
+              // Hide the number of creators input for co-op projects.
+              document.getElementById("numCreators").style.display = "none";
+            } else if (category === "special-project") {
+              document.getElementById("specialProjectFields").style.display =
+                "block";
+              document.getElementById("numCreators").style.display = "block";
+            } else {
+              // If no category is selected, make sure the number input is visible.
+              document.getElementById("numCreators").style.display = "block";
+            }
+            // Regenerate the name fields based on the selected category.
+            generateNameFields();
+          }
+
+          // When the page loads, run these functions.
+          document.addEventListener("DOMContentLoaded", function () {
+            show_about_org_Field();
+            generateNameFields();
+          });
+        </script>
+      </form>
+    </div>
+  </body>
+</html>

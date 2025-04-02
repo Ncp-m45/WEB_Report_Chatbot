@@ -1,0 +1,283 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Senior Project KMITL</title>
+
+    <style>
+      body {
+        background-image: url("static/Img/bg_1.jpg");
+        background-size: cover;
+        background-position: center;
+        font-family: "Kanit", serif;
+        display: grid;
+        place-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .top-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .left img {
+        width: 200px;
+        height: auto;
+        margin-right: 20px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .right_top {
+        color: #311900;
+        font-size: 60px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 0px;
+      }
+
+      .right_bottom {
+        color: #311900;
+        font-size: 25px;
+        margin-top: 0px;
+      }
+
+      .right hr {
+        width: 100%;
+        border: none;
+        height: 2px;
+        background-color: #311900;
+        margin: 0px 0;
+      }
+
+      .inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+
+        input {
+          width: 500px;
+          height: 70px;
+          padding: 30px;
+          background: rgb(255, 255, 255);
+          border-radius: 40px;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+          border: none;
+          color: #311900;
+          font-family: Kanit;
+          font-size: 24px;
+          font-weight: 400;
+          letter-spacing: 1px;
+          margin: 10px;
+          box-sizing: border-box;
+          outline: none;
+        }
+
+        input:focus {
+          outline: 4px solid rgb(204, 204, 204);
+        }
+
+        input::placeholder {
+          color: #cbcbcb;
+          font-weight: 400;
+          font-size: 20px;
+          letter-spacing: 1px;
+        }
+      }
+
+      form[id="role"] {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .radio-container {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+      }
+
+      input[type="radio"] {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+        appearance: none;
+        border-radius: 50%;
+        border: 3px solid #857462;
+        background-color: aliceblue;
+        position: relative;
+        transition: background-color 0.3s, border 0.3s;
+      }
+
+      input[type="radio"]:checked {
+        background-color: #9c8873;
+      }
+
+      input[type="radio"]:checked::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background-color: white;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      button {
+        width: 200px;
+        height: 50px;
+        padding: 10px;
+        background: #311900;
+        border-radius: 40px;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+        border: none;
+        color: #f2ac60;
+        font-family: Kanit;
+        font-size: 25px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-form">
+        <div class="left">
+          <img src="static/Img/Logo_Math.png" alt="Logo" />
+        </div>
+        <div class="right">
+          <div class="right_top">Senior Project</div>
+          <hr />
+          <div class="right_bottom">Applied Mathematics KMITL</div>
+        </div>
+      </div>
+
+      <div class="inputs">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email (@kmitl.ac.th)"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+
+      <h
+        style="
+          color: #311900;
+          font-size: 25px;
+          font-weight: 500;
+          letter-spacing: 1px;
+          margin-top: 15px;
+          margin-bottom: 10px;
+        "
+        >เลือกสถานะของคุณ</h
+      >
+
+      <form id="role">
+        <div class="radio-container" style="margin-right: 50px">
+          <input type="radio" id="student" name="role" value="student" />
+          <label style="color: #311900">นักศึกษา</label>
+        </div>
+        <div class="radio-container">
+          <input type="radio" id="teacher" name="role" value="teacher" />
+          <label style="color: #311900">อาจารย์</label>
+        </div>
+      </form>
+
+      <!-- The hidden inputs will be dynamically inserted here -->
+      <form id="loginForm" action="/" method="POST">
+        <button type="button" onclick="submitForm()">Login</button>
+      </form>
+    </div>
+
+    <script>
+      var error = "{{error}}";
+      if (error === "1") alert("Email or Password are invalid");
+      function submitForm() {
+        // Get the selected role value
+        const selectedRole = document.querySelector(
+          'input[name="role"]:checked'
+        );
+
+        // If no role is selected, show an alert and stop submission
+        if (!selectedRole) {
+          alert("Please select your role");
+          return;
+        }
+
+        // Create hidden input fields for the email, password
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+
+        // Create a hidden input for the selected role
+        const roleInput = document.createElement("input");
+        roleInput.type = "hidden";
+        roleInput.name = "role"; // This name will be sent to the server
+        roleInput.value = selectedRole.value;
+
+        // Create hidden inputs for email and password if needed (optional)
+        const emailHiddenInput = document.createElement("input");
+        emailHiddenInput.type = "hidden";
+        emailHiddenInput.name = "email";
+        emailHiddenInput.value = emailInput.value;
+
+        const passwordHiddenInput = document.createElement("input");
+        passwordHiddenInput.type = "hidden";
+        passwordHiddenInput.name = "password";
+        passwordHiddenInput.value = passwordInput.value;
+
+        // ตรวจสอบว่า password ถูกกรอกหรือไม่
+        if (passwordInput.value.trim() === "") {
+          alert("กรุณากรอกรหัสผ่าน");
+          return;
+        }
+
+        // Append the hidden inputs to the form
+        const form = document.getElementById("loginForm");
+        form.appendChild(roleInput);
+        form.appendChild(emailHiddenInput);
+        form.appendChild(passwordHiddenInput);
+
+        // Now submit the form
+        form.submit();
+      }
+    </script>
+  </body>
+</html>
