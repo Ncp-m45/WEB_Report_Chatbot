@@ -47,10 +47,10 @@ def login():
                 conn.close()
 
                 # test print data                
-                print(f'Email : {session['email']}')
-                print(f'ID : {session['student_id']}')
-                print(f'Student Name : {session['studentName']}')
-                print(f'Role : {session['role']}')
+                print(f"Email : {session['email']}")
+                print(f"ID : {session['student_id']}")
+                print(f"Student Name : {session['studentName']}")
+                print(f"Role : {session['role']}")
                 # end test print data
 
                 return redirect('/hpStudent')
@@ -212,7 +212,7 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
-    
+
+
 
 
