@@ -42,4 +42,4 @@ def generate_response(query_text):
     prompt = f"Answer based on this context:\n{context}\n\nQuestion: {query_text}"
     return prompt
   
-query_postgresql("ฉันอยากทราบว่า รายชื่อสมาชิกกลุ่ม ของโปรเจคเรื่อง Risk Register มีใครบ้าง")
+query_postgresql("ฉันอยากทราบว่ารายชื่อสมาชิกกลุ่มของโปรเจคเรื่อง Risk Register มีใครบ้าง")
